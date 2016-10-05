@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import ViewContainer from './app/components/ViewContainer.js'
 import StatusBarBackground from './app/components/StatusBarBackground.js'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const people = [
   {firstName: "Jonathan", lastName: "Grant", id: 1},
@@ -24,7 +25,7 @@ const people = [
 class ReactNative extends Component {
   constructor(props) {
     super(props)
-    var ds = new ListView.DataSource({rowHasChanged(r1, r2) => r1 != r2})
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
     this.state = {
       peopleWithDataSource: ds.cloneWithRows(people)
     }
@@ -46,6 +47,7 @@ class ReactNative extends Component {
     return (
       <View style={styles.personRow}>
         <Text style={styles.personName}>{person.firstName}</Text>
+        <Icon name="chevron-right" />
       </View>
       )
   }
