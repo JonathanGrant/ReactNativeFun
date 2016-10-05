@@ -9,25 +9,45 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ListView
 } from 'react-native';
+import ViewContainer from './app/components/ViewContainer.js'
+import StatusBarBackground from './app/components/StatusBarBackground.js'
+
+const people = [
+  {firstName: "Jonathan", lastName: "Grant", id: 1},
+  {firstName: "Gary", lastName: "Vee", id: 2},
+  {firstName: "Mike", lastName: "Swift", id: 3},
+]
 
 class ReactNative extends Component {
+  constructor(props) {
+    super(props)
+    var ds = new ListView.DataSource({rowHasChanged(r1, r2) => r1 != r2})
+    this.state = {
+      peopleWithDataSource: ds.cloneWithRows(people)
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <ViewContainer>
+        <StatusBarBackground />
+        <ListView
+        dataSource={this.state.peopleWithDataSource}
+        renderRow={(person) => {return this._renderPersonRow(person) }}>
+        </ListView>
+      </ViewContainer>
     );
+  }
+
+  _renderPersonRow(person) {
+    return (
+      <View style={styles.personRow}>
+        <Text style={styles.personName}>{person.firstName}</Text>
+      </View>
+      )
   }
 }
 
@@ -38,16 +58,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  personRow: {
+    flexDirection: "row",
+    justifyContent: 'center',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  personName: {
+
+  }
 });
 
 AppRegistry.registerComponent('ReactNative', () => ReactNative);
