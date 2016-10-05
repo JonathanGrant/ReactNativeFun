@@ -15,11 +15,10 @@ import {
 import ViewContainer from './app/components/ViewContainer.js'
 import StatusBarBackground from './app/components/StatusBarBackground.js'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IgOAuthContainer from './app/oauth/instagram.js'
 
-const people = [
-  {firstName: "Jonathan", lastName: "Grant", id: 1},
-  {firstName: "Gary", lastName: "Vee", id: 2},
-  {firstName: "Mike", lastName: "Swift", id: 3},
+const oauthBtns = [
+  IgOAuthContainer,
 ]
 
 class ReactNative extends Component {
@@ -27,29 +26,17 @@ class ReactNative extends Component {
     super(props)
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
     this.state = {
-      peopleWithDataSource: ds.cloneWithRows(people)
+      oauthBtns: ds.cloneWithRows(oauthBtns)
     }
   }
 
   render() {
     return (
-      <ViewContainer>
+      <ViewContainer style={styles.container}>
         <StatusBarBackground />
-        <ListView
-        dataSource={this.state.peopleWithDataSource}
-        renderRow={(person) => {return this._renderPersonRow(person) }}>
-        </ListView>
+        <IgOAuthContainer />
       </ViewContainer>
     );
-  }
-
-  _renderPersonRow(person) {
-    return (
-      <View style={styles.personRow}>
-        <Text style={styles.personName}>{person.firstName}</Text>
-        <Icon name="chevron-right" />
-      </View>
-      )
   }
 }
 
@@ -60,13 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  personRow: {
-    flexDirection: "row",
-    justifyContent: 'center',
-  },
-  personName: {
-
-  }
 });
 
 AppRegistry.registerComponent('ReactNative', () => ReactNative);
