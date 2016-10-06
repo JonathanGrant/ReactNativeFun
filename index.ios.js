@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+  Linking,
   AppRegistry,
   StyleSheet,
   Text,
@@ -15,18 +16,12 @@ import {
 import ViewContainer from './app/components/ViewContainer.js'
 import StatusBarBackground from './app/components/StatusBarBackground.js'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import IgOAuthContainer from './app/oauth/instagram.js'
-
-const oauthBtns = [
-  IgOAuthContainer,
-]
 
 class ReactNative extends Component {
   constructor(props) {
     super(props)
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
     this.state = {
-      oauthBtns: ds.cloneWithRows(oauthBtns)
     }
   }
 
@@ -34,7 +29,7 @@ class ReactNative extends Component {
     return (
       <ViewContainer style={styles.container}>
         <StatusBarBackground />
-        <IgOAuthContainer />
+        <Icon name="instagram" style={styles.oAuthIcon} onPress={() => Linking.openURL('http://instagram.com')}/>
       </ViewContainer>
     );
   }
@@ -47,6 +42,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  oAuthIcon: {
+    fontSize: 80,
+  }
 });
 
 AppRegistry.registerComponent('ReactNative', () => ReactNative);
